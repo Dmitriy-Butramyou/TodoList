@@ -11,10 +11,11 @@
         <!--<input type="text" name="deadline" placeholder="deadline" />-->
         <input type="date" id="deadline" name="deadline" class="form-control form-control-sm"
                placeholder="YYYY-MM-DD">
+        <input type="hidden" name="_csrf" value="{{_csrf.token}}" />
         <button type="submit">Добавить</button>
     </form>
 </div>
 
-<p>Get your greeting <a href="/greeting">here</a></p>
+<p>Get your greeting <a href="/">here</a></p>
 </body>
 </html>

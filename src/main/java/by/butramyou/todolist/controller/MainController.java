@@ -1,4 +1,4 @@
-package by.butramyou.todolist;
+package by.butramyou.todolist.controller;
 
 import by.butramyou.todolist.domain.Task;
 import by.butramyou.todolist.repos.TaskRepo;
@@ -13,18 +13,17 @@ import javax.xml.crypto.Data;
 import java.util.Map;
 
 @Controller
-public class GreetingController {
+public class MainController {
 
     @Autowired
     private TaskRepo taskRepo;
 
-    @GetMapping("/greeting")
-    public String greeting(@RequestParam(name="name", required=false, defaultValue="World") String name, Model model) {
-        model.addAttribute("name", name);
+    @GetMapping("/")
+    public String greeting(){
         return "greeting";
     }
 
-    @GetMapping()
+    @GetMapping("/index")
     public String index(Map<String, Object> model) {
         Iterable<Task> tasks = taskRepo.findAll();
         model.put("tasks", tasks);

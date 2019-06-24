@@ -8,6 +8,7 @@ import javax.xml.crypto.Data;
 import java.text.DateFormat;
 import java.text.SimpleDateFormat;
 import java.time.LocalDateTime;
+import java.time.format.DateTimeFormatter;
 
 @Entity
 public class Task {
@@ -18,7 +19,7 @@ public class Task {
     private String textTask;
     private LocalDateTime problemStatementDate;
     private String deadline;
-    private String implementationDate;
+    private LocalDateTime implementationDate;
     private boolean completeness;
 
     public Task() {
@@ -63,11 +64,11 @@ public class Task {
         this.deadline = deadline;
     }
 
-    public String getImplementationDate() {
+    public LocalDateTime getImplementationDate() {
         return implementationDate;
     }
 
-    public void setImplementationDate(String implementationDate) {
+    public void setImplementationDate(LocalDateTime implementationDate) {
         this.implementationDate = implementationDate;
     }
 
