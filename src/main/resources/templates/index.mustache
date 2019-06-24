@@ -1,0 +1,16 @@
+<!DOCTYPE HTML>
+<html>
+<body>
+<div>Список заданий</div>
+<form method="post" action="filter">
+    <input type="text" name="filter" >
+    <button type="submit">Найти</button>
+</form>
+{{#tasks}}
+    <div>
+        <span>{{textTask}}</span>
+    </div>
+{{/tasks}}
+<p>Get your greeting <a href="/greeting">here</a></p>
+</body>
+</html>
