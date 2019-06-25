@@ -31,9 +31,16 @@ public class MainController {
     }
 
     @GetMapping("/index")
-    public String index(Map<String, Object> model) {
+    public String index(@RequestParam(required = false, defaultValue = "") String filter, Model model) {
         Iterable<Task> tasks = taskRepo.findAll();
-        model.put("tasks", tasks);
+
+        if(filter != null && !filter.isEmpty()) {
+            tasks = taskRepo.findAllByTag(filter);
+        } else {
+            tasks = taskRepo.findAll();
+        }
+        model.addAttribute("tasks", tasks);
+        model.addAttribute("filter", filter);
         return "index";
     }
 
@@ -47,7 +54,7 @@ public class MainController {
     @PostMapping("/addTask")
     public String add(@AuthenticationPrincipal User user,
                       @RequestParam String textTask,
-                      @RequestParam String deadline, Map<String, Object> model) throws ParseException {
+                      @RequestParam String deadline, Map<String, Object> model) {
         DateFormat dateFormat = new SimpleDateFormat("yyyy/MM/dd");
         Date now = new Date();
         int nowInt = Integer.parseInt(dateFormat.format(now).replace("/", ""));

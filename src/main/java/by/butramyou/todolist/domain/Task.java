@@ -18,6 +18,7 @@ public class Task {
     private String deadline;
     private LocalDateTime implementationDate;
     private boolean completeness;
+    private String tag;
 
     @ManyToOne(fetch = FetchType.EAGER)
     @JoinColumn(name = "user_id")
@@ -31,7 +32,16 @@ public class Task {
         this.textTask = textTask;
         this.problemStatementDate = LocalDateTime.now();
         this.deadline = deadline;
+        this.tag = "New";
 
+    }
+
+    public String getTag() {
+        return tag;
+    }
+
+    public void setTag(String tag) {
+        this.tag = tag;
     }
 
     public String getAuthorName() {

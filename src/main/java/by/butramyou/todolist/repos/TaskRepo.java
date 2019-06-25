@@ -1,12 +1,12 @@
 package by.butramyou.todolist.repos;
 
 import by.butramyou.todolist.domain.Task;
-import org.springframework.data.repository.CrudRepository;
+import org.springframework.data.jpa.repository.JpaRepository;
 
 import java.util.List;
 
-public interface TaskRepo extends CrudRepository<Task, Integer> {
-    // TODO: 24.06.2019 X3
-//    List<Task> findAllByCompletenessNot(boolean b);
+public interface TaskRepo extends JpaRepository<Task, Integer> {
+
+    List<Task> findAllByTag(String tag);
 }
 
