@@ -16,6 +16,16 @@
     </form>
 </div>
 
+<div>
+    {{#tasks}}
+        <div>
+            <strong>{{authorName}}</strong>
+            <span>{{textTask}}</span>
+            <i>{{deadline}}</i>
+        </div>
+    {{/tasks}}
+</div>
+
 <p>Get your greeting <a href="/">here</a></p>
 </body>
 </html>

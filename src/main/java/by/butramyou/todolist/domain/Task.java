@@ -1,9 +1,6 @@
 package by.butramyou.todolist.domain;
 
-import javax.persistence.Entity;
-import javax.persistence.GeneratedValue;
-import javax.persistence.GenerationType;
-import javax.persistence.Id;
+import javax.persistence.*;
 import javax.xml.crypto.Data;
 import java.text.DateFormat;
 import java.text.SimpleDateFormat;
@@ -22,14 +19,30 @@ public class Task {
     private LocalDateTime implementationDate;
     private boolean completeness;
 
+    @ManyToOne(fetch = FetchType.EAGER)
+    @JoinColumn(name = "user_id")
+    private User authorTask;
+
     public Task() {
     }
 
-    public Task(String textTask, String deadline) {
+    public Task(String textTask, String deadline, User user) {
+        this.authorTask = user;
         this.textTask = textTask;
         this.problemStatementDate = LocalDateTime.now();
         this.deadline = deadline;
 
+    }
+
+    public String getAuthorName() {
+        return authorTask != null ? authorTask.getUsername() : "<none>";
+    }
+    public User getAuthorTask() {
+        return authorTask;
+    }
+
+    public void setAuthorTask(User authorTask) {
+        this.authorTask = authorTask;
     }
 
     public Integer getId() {
