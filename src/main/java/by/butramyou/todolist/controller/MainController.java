@@ -3,6 +3,7 @@ package by.butramyou.todolist.controller;
 import by.butramyou.todolist.domain.Task;
 import by.butramyou.todolist.domain.User;
 import by.butramyou.todolist.repos.TaskRepo;
+import by.butramyou.todolist.util.DateUtil;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.core.annotation.AuthenticationPrincipal;
 import org.springframework.stereotype.Controller;
@@ -15,6 +16,7 @@ import javax.xml.crypto.Data;
 import java.text.DateFormat;
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
+import java.time.LocalDateTime;
 import java.util.Date;
 import java.util.Locale;
 import java.util.Map;
@@ -31,18 +33,37 @@ public class MainController {
     }
 
     @GetMapping("/index")
-    public String index(@RequestParam(required = false, defaultValue = "") String filter, Model model) {
+    public String index(@RequestParam(required = false, defaultValue = "") String filter,
+                        @RequestParam(required = false, defaultValue = "") String day,
+                        Model model) {
         Iterable<Task> tasks = taskRepo.findAll();
+        Date nowTime = DateUtil.setTimeToMidnight(new Date());
+
 
         if(filter != null && !filter.isEmpty()) {
             tasks = taskRepo.findAllByTag(filter);
         } else {
             tasks = taskRepo.findAll();
         }
+
+        if(day != null && !day.isEmpty()) {
+            if(day.equals("Today")){
+                tasks = taskRepo.findAllByDeadline(nowTime);
+            } else if (day.equals("Tomorrow")){
+                nowTime = DateUtil.getTomorrow(nowTime);
+                tasks = taskRepo.findAllByDeadline(nowTime);
+            } else  if (day.equals("Someday")) {
+                nowTime = DateUtil.getTomorrow(nowTime);
+                tasks = taskRepo.findAllByDeadlineAfter(nowTime);
+            } else  if (day.equals("Deadline Missing")) {
+                tasks = taskRepo.findAllByDeadlineBefore(nowTime);
+            }
+        }
         model.addAttribute("tasks", tasks);
         model.addAttribute("filter", filter);
         return "index";
     }
+
 
 //    @GetMapping("/addTask")
 //    public String add(Map<String, Object> model) {
@@ -54,10 +75,12 @@ public class MainController {
     @PostMapping("/index")
     public String addAll(@AuthenticationPrincipal User user,
                       @RequestParam String textTask,
-                      @RequestParam String deadline, Map<String, Object> model) {
-        int result = comparisonTime(deadline);
-        if (result == 1){
-            Task task = new Task(textTask, deadline, user);
+                      @RequestParam String deadline, Map<String, Object> model) throws ParseException {
+        Date nowTime = DateUtil.setTimeToMidnight(new Date());
+        DateFormat dateFormat = new SimpleDateFormat("yyyy-MM-dd");
+        Date deadlineTime = dateFormat.parse(deadline);
+        if (deadlineTime.after(nowTime) || deadlineTime.equals(nowTime)){
+            Task task = new Task(textTask, deadlineTime, user);
             taskRepo.save(task);
             Iterable<Task> tasks = taskRepo.findAll();
             model.put("tasks", tasks);
@@ -67,19 +90,6 @@ public class MainController {
         return "index";
     }
 
-    private Integer comparisonTime(String deadline) {
-        DateFormat dateFormat = new SimpleDateFormat("yyyy/MM/dd");
-        Date now = new Date();
-        int nowInt = Integer.parseInt(dateFormat.format(now).replace("/", ""));
-        int deadlineInt = Integer.parseInt(deadline.replace("-", ""));
-        if (deadlineInt > nowInt) {
-            return 1;
-        }
-        if(deadlineInt == nowInt) {
-            return 0;
-        }
-        return -1;
-    }
 
 //    @PostMapping("/addTask")
 //    public String add(@AuthenticationPrincipal User user,

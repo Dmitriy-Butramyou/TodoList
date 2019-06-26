@@ -1,11 +1,9 @@
 package by.butramyou.todolist.domain;
 
 import javax.persistence.*;
-import javax.xml.crypto.Data;
-import java.text.DateFormat;
-import java.text.SimpleDateFormat;
+import java.text.ParseException;
 import java.time.LocalDateTime;
-import java.time.format.DateTimeFormatter;
+import java.util.Date;
 
 @Entity
 public class Task {
@@ -15,7 +13,7 @@ public class Task {
 
     private String textTask;
     private LocalDateTime problemStatementDate;
-    private String deadline;
+    private Date deadline;
     private LocalDateTime implementationDate;
     private boolean completeness;
     private String tag;
@@ -27,7 +25,8 @@ public class Task {
     public Task() {
     }
 
-    public Task(String textTask, String deadline, User user) {
+
+    public Task(String textTask, Date deadline, User user) throws ParseException {
         this.authorTask = user;
         this.textTask = textTask;
         this.problemStatementDate = LocalDateTime.now();
@@ -47,6 +46,7 @@ public class Task {
     public String getAuthorName() {
         return authorTask != null ? authorTask.getUsername() : "<none>";
     }
+
     public User getAuthorTask() {
         return authorTask;
     }
@@ -79,11 +79,11 @@ public class Task {
         this.problemStatementDate = problemStatementDate;
     }
 
-    public String getDeadline() {
+    public Date getDeadline() {
         return deadline;
     }
 
-    public void setDeadline(String deadline) {
+    public void setDeadline(Date deadline) {
         this.deadline = deadline;
     }
 
