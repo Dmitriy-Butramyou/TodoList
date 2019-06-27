@@ -5,14 +5,18 @@ import by.butramyou.todolist.domain.User;
 import by.butramyou.todolist.repos.TaskRepo;
 import by.butramyou.todolist.util.DateUtil;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.beans.factory.annotation.Value;
 import org.springframework.security.core.annotation.AuthenticationPrincipal;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestParam;
+import org.springframework.web.multipart.MultipartFile;
 
 import javax.xml.crypto.Data;
+import java.io.File;
+import java.io.IOException;
 import java.text.DateFormat;
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
@@ -20,12 +24,16 @@ import java.time.LocalDateTime;
 import java.util.Date;
 import java.util.Locale;
 import java.util.Map;
+import java.util.UUID;
 
 @Controller
 public class MainController {
 
     @Autowired
     private TaskRepo taskRepo;
+
+    @Value("${upload.path}")
+    private String uploadPath;
 
     @GetMapping("/")
     public String greeting(){
@@ -74,13 +82,35 @@ public class MainController {
 
     @PostMapping("/index")
     public String addAll(@AuthenticationPrincipal User user,
+                      @RequestParam String topicTask,
                       @RequestParam String textTask,
-                      @RequestParam String deadline, Map<String, Object> model) throws ParseException {
+                      @RequestParam String deadline, Map<String, Object> model,
+                      @RequestParam("file") MultipartFile file
+    ) throws ParseException, IOException {
+
         Date nowTime = DateUtil.setTimeToMidnight(new Date());
         DateFormat dateFormat = new SimpleDateFormat("yyyy-MM-dd");
         Date deadlineTime = dateFormat.parse(deadline);
+
         if (deadlineTime.after(nowTime) || deadlineTime.equals(nowTime)){
-            Task task = new Task(textTask, deadlineTime, user);
+            Task task = new Task(topicTask, textTask, deadlineTime, user);
+
+            //add file
+            if(file != null && !file.getOriginalFilename().isEmpty()) {
+                File uploadDir = new File(uploadPath);
+
+                if (!uploadDir.exists()){
+                    uploadDir.mkdir();
+                }
+
+                String uuidFile = UUID.randomUUID().toString();
+                String resultFilename = uuidFile + "." + file.getOriginalFilename();
+
+                file.transferTo(new File(uploadPath + "/" + resultFilename));
+
+                task.setFilename(resultFilename);
+            }
+
             taskRepo.save(task);
             Iterable<Task> tasks = taskRepo.findAll();
             model.put("tasks", tasks);

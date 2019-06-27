@@ -21,7 +21,10 @@
 </div>
 <div class="collapse" id="collapseExample">
     <div class="form-group mt-3">
-        <form method="post" class="form-inline">
+        <form method="post" class="form-inline" enctype="multipart/form-data">
+            <div class="form-group mb-2 mr-2">
+                <input type="text" name="topicTask" placeholder="Введите тему" />
+            </div>
             <div class="form-group mb-2">
                 <input type="text" name="textTask" placeholder="Введите задание" />
             </div>
@@ -29,6 +32,10 @@
                 <input type="date" id="deadline" name="deadline" class="form-control form-control-sm"
                        placeholder="YYYY-MM-DD">
             </div>
+                <div class="custom-file">
+                    <input type="file" name="file" id="customFile">
+                    <label class="custom-file-label" for="customFile">Choose file</label>
+                </div>
             <input type="hidden" name="_csrf" value="${_csrf.token}" />
             <div class="form-group">
                 <button type="submit" class="btn btn-primary mb-2">Send</button>
@@ -55,7 +62,7 @@
 
   <a href="#" class="list-group-item list-group-item-action mb-2">
       <div class="d-flex w-100 justify-content-between">
-          <h5 class="mb-1">List group item heading</h5>
+          <h5 class="mb-1">${task.topicTask}</h5>
           <small>${task.deadline?date}</small>
       </div>
       <p class="mb-1">${task.textTask}</p>

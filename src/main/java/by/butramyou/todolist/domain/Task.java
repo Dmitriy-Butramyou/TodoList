@@ -11,12 +11,14 @@ public class Task {
     @GeneratedValue(strategy = GenerationType.AUTO)
     private Integer id;
 
+    private String topicTask;
     private String textTask;
     private LocalDateTime problemStatementDate;
     private Date deadline;
     private LocalDateTime implementationDate;
     private boolean completeness;
     private String tag;
+    private String filename;
 
     @ManyToOne(fetch = FetchType.EAGER)
     @JoinColumn(name = "user_id")
@@ -25,14 +27,29 @@ public class Task {
     public Task() {
     }
 
-
-    public Task(String textTask, Date deadline, User user) throws ParseException {
+    public Task(String topicTask, String textTask, Date deadline, User user) throws ParseException {
+        this.topicTask = topicTask;
         this.authorTask = user;
         this.textTask = textTask;
         this.problemStatementDate = LocalDateTime.now();
         this.deadline = deadline;
         this.tag = "New";
+    }
 
+    public String getTopicTask() {
+        return topicTask;
+    }
+
+    public void setTopicTask(String topicTask) {
+        this.topicTask = topicTask;
+    }
+
+    public String getFilename() {
+        return filename;
+    }
+
+    public void setFilename(String filename) {
+        this.filename = filename;
     }
 
     public String getTag() {
