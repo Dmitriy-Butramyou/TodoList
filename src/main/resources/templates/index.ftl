@@ -32,10 +32,12 @@
                 <input type="date" id="deadline" name="deadline" class="form-control form-control-sm"
                        placeholder="YYYY-MM-DD">
             </div>
+            <div class="input-group mb-3">
                 <div class="custom-file">
-                    <input type="file" name="file" id="customFile">
-                    <label class="custom-file-label" for="customFile">Choose file</label>
+                    <input type="file" name="file" class="custom-file-input" id="inputGroupFile03" aria-describedby="inputGroupFileAddon03">
+                    <label class="custom-file-label"  for="inputGroupFile03">Choose file</label>
                 </div>
+            </div>
             <input type="hidden" name="_csrf" value="${_csrf.token}" />
             <div class="form-group">
                 <button type="submit" class="btn btn-primary mb-2">Send</button>
@@ -62,7 +64,8 @@
 
   <a href="#" class="list-group-item list-group-item-action mb-2">
       <div class="d-flex w-100 justify-content-between">
-          <h5 class="mb-1">${task.topicTask}</h5>
+          <h5 class="mb-1">${task.topicTask} <span class="badge badge-success">${task.tag}</span></h5>
+          <#--<h5 class="mb-1">${task.topicTask}</h5>-->
           <small>${task.deadline?date}</small>
       </div>
       <p class="mb-1">${task.textTask}</p>
