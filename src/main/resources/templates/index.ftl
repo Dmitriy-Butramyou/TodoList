@@ -1,6 +1,6 @@
 <#import "parts/common.ftl" as c>
 <@c.page>
-<h3>Найти по тегу</h3>
+<h3>Find by tag</h3>
 <div class="form-row">
     <div class="form-group col-md-6">
         <form method="get" action="/index" class="form-inline">
@@ -9,7 +9,7 @@
                 <option value="In the process">In the process</option>
                 <option value="Complete">Complete</option>
             </select>
-            <button type="submit" class="btn btn-primary ml-2">Найти</button>
+            <button type="submit" class="btn btn-primary ml-2">Find</button>
 
         </form>
     </div>
@@ -31,13 +31,14 @@
             </div>
             <input type="hidden" name="_csrf" value="${_csrf.token}" />
             <div class="form-group">
-                <button type="submit" class="btn btn-primary mb-2">Добавить</button>
+                <button type="submit" class="btn btn-primary mb-2">Send</button>
             </div>
         </form>
     </div>
 </div>
 <form method="get" action="/index"">
     <div class="btn-group mb-3" role="group" aria-label="Basic example">
+        <button type="submit" class="btn btn-outline-primary" name="day" value="All">All</button>
         <button type="submit" class="btn btn-outline-primary" name="day" value="Today">Today</button>
         <button type="submit" class="btn btn-outline-primary" name="day" value="Tomorrow">Tomorrow</button>
         <button type="submit" class="btn btn-outline-primary" name="day" value="Someday">Someday</button>
