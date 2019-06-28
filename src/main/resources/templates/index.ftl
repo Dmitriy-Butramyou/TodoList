@@ -20,24 +20,36 @@
     </a>
 </div>
 <div class="collapse" id="collapseExample">
-    <div class="form-group mt-3">
-        <form method="post" class="form-inline" enctype="multipart/form-data">
-            <div class="form-group mb-2 mr-2">
-                <input type="text" name="topicTask" placeholder="Введите тему" />
-            </div>
-            <div class="form-group mb-2">
-                <input type="text" name="textTask" placeholder="Введите задание" />
-            </div>
-            <div class="form-group mx-sm-3 mb-2">
-                <input type="date" id="deadline" name="deadline" class="form-control form-control-sm"
-                       placeholder="YYYY-MM-DD">
-            </div>
-            <div class="input-group mb-3">
-                <div class="custom-file">
-                    <input type="file" name="file" class="custom-file-input" id="inputGroupFile03" aria-describedby="inputGroupFileAddon03">
-                    <label class="custom-file-label"  for="inputGroupFile03">Choose file</label>
+
+    <div class="form-group mt-3  col-md-6">
+
+        <form method="post" enctype="multipart/form-data">
+
+            <div class="form-group row">
+                <label class="col-sm-3 col-form-label">Subject:</label>
+                <div class="col-sm-5">
+                    <input type="text" class="form-control" name="topicTask" placeholder="Enter subject..." />
                 </div>
             </div>
+
+            <div class="form-group row">
+                <label class="col-sm-3 col-form-label">Deadline:</label>
+                <div class="col-sm-5">
+                    <input type="date" id="deadline" name="deadline" class="form-control form-control-sm">
+                </div>
+            </div>
+
+            <div class="form-group row">
+                <label class="col-sm-3 col-form-label">Enter a task:</label>
+                <div class="col-sm-8">
+                    <textarea class="form-control"  name="textTask" placeholder="Enter a task..."id="exampleFormControlTextarea1" rows="3"></textarea>
+                </div>
+            </div>
+                <div class="form-group row">
+                    <label class="col-sm-3 col-form-label">Upload file:</label>
+                    <div class="col-sm-8">
+                        <input type="file"  name="file" class="form-control-file" id="exampleFormControlFile1">                    </div>
+                </div>
             <input type="hidden" name="_csrf" value="${_csrf.token}" />
             <div class="form-group">
                 <button type="submit" class="btn btn-primary mb-2">Send</button>
@@ -62,10 +74,9 @@
 <div class="list-group col-md-6">
 <#list tasks as task>
 
-  <a href="#" class="list-group-item list-group-item-action mb-2">
+  <a href="/task/${task.id}" class="list-group-item list-group-item-action mb-2">
       <div class="d-flex w-100 justify-content-between">
           <h5 class="mb-1">${task.topicTask} <span class="badge badge-success">${task.tag}</span></h5>
-          <#--<h5 class="mb-1">${task.topicTask}</h5>-->
           <small>${task.deadline?date}</small>
       </div>
       <p class="mb-1">${task.textTask}</p>

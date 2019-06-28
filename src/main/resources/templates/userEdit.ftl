@@ -16,7 +16,7 @@
         <tr>
 
       <td>
-          <input type="text" name="username" value="${user.username}">
+          <input type="text" class="form-control col-sm-8" name="username" value="${user.username}">
       </td>
  <#list roles as role>
        <td> <div>
