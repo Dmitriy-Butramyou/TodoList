@@ -1,20 +1,17 @@
 <#import "parts/common.ftl" as c>
 <@c.page>
-<div>
-    <h5>${task.deadline?date}</h5>
+<div class="card text-center">
+    <div class="card-header">
+        Deadline: ${task.deadline?date}
+    </div>
+    <div class="card-body">
+        <h5 class="card-title">${task.topicTask}</h5>
+        <p class="card-text">${task.textTask}</p>
+        <a href="/task/change/${task.id}" class="btn btn-outline-primary">Change</a>
+    </div>
+    <div class="card-footer text-muted">
+        Have a nice day :)
+    </div>
 </div>
-<div>
-    <h5>${task.topicTask}</h5>
-</div>
-<div>
-    <h5>${task.textTask}</h5>
-</div>
-<#--<div>-->
-    <#--<h5>${task.filename}</h5>-->
-<#--</div>-->
-<div>
-    <h5>${task.tag}</h5>
-</div>
-
 
 </@c.page>

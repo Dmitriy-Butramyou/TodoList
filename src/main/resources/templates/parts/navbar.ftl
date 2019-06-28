@@ -16,9 +16,7 @@
                    <li class="nav-item">
                        <a class="nav-link" href="/index">Tasks</a>
                    </li>
-             </#if>
 
-                 <#if user??>
                 <li class="nav-item">
                     <a class="nav-link" href="/user/profile">Profile</a>
                 </li>
@@ -29,11 +27,6 @@
                       <a class="nav-link" href="/user">User List</a>
                   </li>
              </#if>
-            <#--<#if isAdmin>-->
-                <#--<li class="nav-item">-->
-                    <#--<a class="nav-link" href="/addTask">Add task</a>-->
-                <#--</li>-->
-            <#--</#if>-->
 
          </ul>
          <div class="navbar-text mr-3">${name}</div>

@@ -3,7 +3,6 @@ package by.butramyou.todolist.controller;
 
 import by.butramyou.todolist.domain.Role;
 import by.butramyou.todolist.domain.User;
-import by.butramyou.todolist.repos.UserRepo;
 import by.butramyou.todolist.service.UserService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.access.prepost.PreAuthorize;

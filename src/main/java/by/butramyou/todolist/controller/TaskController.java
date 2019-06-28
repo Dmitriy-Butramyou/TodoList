@@ -19,8 +19,16 @@ public class TaskController {
 
     @GetMapping("{task}")
     public String taskDescription(@PathVariable Task task, Model model){
+        task.setTag("");
+        taskRepo.save(task);
         model.addAttribute("task", task);
         return "taskShow";
+    }
+
+    @GetMapping("/change/{task}")
+    public String taskChange(@PathVariable Task task, Model model) {
+        model.addAttribute("task", task);
+        return "taskChange";
     }
 }
 

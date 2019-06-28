@@ -1,19 +1,19 @@
 <#import "parts/common.ftl" as c>
 <@c.page>
-<h3>Find by tag</h3>
-<div class="form-row">
-    <div class="form-group col-md-6">
-        <form method="get" action="/index" class="form-inline">
-            <select class="form-control form-control-sm" name="filter">
-                <option value="New">New</option>
-                <option value="In the process">In the process</option>
-                <option value="Complete">Complete</option>
-            </select>
-            <button type="submit" class="btn btn-primary ml-2">Find</button>
+<#--<h3>Find by tag</h3>-->
+<#--<div class="form-row">-->
+    <#--<div class="form-group col-md-6">-->
+        <#--<form method="get" action="/index" class="form-inline">-->
+            <#--<select class="form-control form-control-sm" name="filter">-->
+                <#--<option value="New">New</option>-->
+                <#--<option value="In the process">In the process</option>-->
+                <#--<option value="Complete">Complete</option>-->
+            <#--</select>-->
+            <#--<button type="submit" class="btn btn-primary ml-2">Find</button>-->
 
-        </form>
-    </div>
-</div>
+        <#--</form>-->
+    <#--</div>-->
+<#--</div>-->
 <div>
     <a class="btn btn-primary mb-3" data-toggle="collapse" href="#collapseExample" role="button" aria-expanded="false" aria-controls="collapseExample">
         Add new Task
@@ -57,7 +57,8 @@
         </form>
     </div>
 </div>
-<form method="get" action="/index"">
+
+<form method="get" action="/index">
     <div class="btn-group mb-3" role="group" aria-label="Basic example">
         <button type="submit" class="btn btn-outline-primary" name="day" value="All">All</button>
         <button type="submit" class="btn btn-outline-primary" name="day" value="Today">Today</button>
@@ -66,22 +67,16 @@
         <button type="submit" class="btn btn-outline-danger" name="day" value="Deadline Missing">Deadline Missing</button>
     </div>
 </form>
-
-
-
-
-
-<div class="list-group col-md-6">
+<div class="list-group col-md-5">
 <#list tasks as task>
-
-  <a href="/task/${task.id}" class="list-group-item list-group-item-action mb-2">
-      <div class="d-flex w-100 justify-content-between">
-          <h5 class="mb-1">${task.topicTask} <span class="badge badge-success">${task.tag}</span></h5>
-          <small>${task.deadline?date}</small>
-      </div>
-      <p class="mb-1">${task.textTask}</p>
-      <small>${task.authorName}</small>
-  </a>
+    <a href="/task/${task.id}" class="list-group-item list-group-item-action mb-2 " style="background: ${lighting}">
+        <div class="d-flex w-100 justify-content-between">
+            <h5 class="mb-1">${task.topicTask} <span class="badge badge-success">${task.tag}</span></h5>
+            <small>${task.deadline?date}</small>
+        </div>
+        <p class="mb-1">${task.textTask}</p>
+        <small>${task.authorName}</small>
+    </a>
 <#else >
         No task
 </#list>

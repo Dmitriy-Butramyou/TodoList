@@ -14,16 +14,12 @@ import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.multipart.MultipartFile;
 
-import javax.xml.crypto.Data;
 import java.io.File;
 import java.io.IOException;
 import java.text.DateFormat;
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
-import java.time.LocalDateTime;
 import java.util.Date;
-import java.util.Locale;
-import java.util.Map;
 import java.util.UUID;
 
 @Controller
@@ -45,8 +41,8 @@ public class MainController {
                         @RequestParam(required = false, defaultValue = "") String day,
                         Model model) {
         Iterable<Task> tasks = taskRepo.findAll();
+        String lighting = "";
         Date nowTime = DateUtil.setTimeToMidnight(new Date());
-
 
         if(filter != null && !filter.isEmpty()) {
             tasks = taskRepo.findAllByTag(filter);
@@ -65,26 +61,20 @@ public class MainController {
                 tasks = taskRepo.findAllByDeadlineAfter(nowTime);
             } else  if (day.equals("Deadline Missing")) {
                 tasks = taskRepo.findAllByDeadlineBefore(nowTime);
+                lighting = "linear-gradient(135deg, rgba(248,80,50,1) 0%, rgba(240,96,77,1) 18%, rgba(246,41,12,1) 57%, rgba(227,45,25,1) 79%, rgba(231,56,39,1) 100%);";
             }
         }
         model.addAttribute("tasks", tasks);
         model.addAttribute("filter", filter);
+        model.addAttribute("lighting", lighting);
         return "index";
     }
-
-
-//    @GetMapping("/addTask")
-//    public String add(Map<String, Object> model) {
-//        Iterable<Task> tasks = taskRepo.findAll();
-//        model.put("tasks", tasks);
-//        return "addTask";
-//    }
 
     @PostMapping("/index")
     public String addAll(@AuthenticationPrincipal User user,
                       @RequestParam String topicTask,
                       @RequestParam String textTask,
-                      @RequestParam String deadline, Map<String, Object> model,
+                      @RequestParam String deadline, Model model,
                       @RequestParam("file") MultipartFile file
     ) throws ParseException, IOException {
 
@@ -113,28 +103,10 @@ public class MainController {
 
             taskRepo.save(task);
             Iterable<Task> tasks = taskRepo.findAll();
-            model.put("tasks", tasks);
+            model.addAttribute("tasks", tasks);
         }
         Iterable<Task> tasks = taskRepo.findAll();
-        model.put("tasks", tasks);
+        model.addAttribute("tasks", tasks);
         return "index";
     }
-
-
-//    @PostMapping("/addTask")
-//    public String add(@AuthenticationPrincipal User user,
-//                      @RequestParam String textTask,
-//                      @RequestParam String deadline, Map<String, Object> model) {
-//        int result = comparisonTime(deadline);
-//        if (result == 1){
-//            Task task = new Task(textTask, deadline, user);
-//            taskRepo.save(task);
-//            Iterable<Task> tasks = taskRepo.findAll();
-//            model.put("tasks", tasks);
-//        }
-//        Iterable<Task> tasks = taskRepo.findAll();
-//        model.put("tasks", tasks);
-//        return "addTask";
-//    }
-
 }
