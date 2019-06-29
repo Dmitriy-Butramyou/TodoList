@@ -6,7 +6,7 @@ import org.springframework.data.jpa.repository.JpaRepository;
 import java.util.Date;
 import java.util.List;
 
-public interface TaskRepo extends JpaRepository<Task, Integer> {
+public interface TaskRepo extends JpaRepository<Task, Long> {
 
     List<Task> findAllByTag(String tag);
     List<Task> findAllByDeadline(Date deadline);

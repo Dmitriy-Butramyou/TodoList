@@ -41,7 +41,6 @@ public class MainController {
                         @RequestParam(required = false, defaultValue = "") String day,
                         Model model) {
         Iterable<Task> tasks = taskRepo.findAll();
-        String lighting = "";
         Date nowTime = DateUtil.setTimeToMidnight(new Date());
 
         if(filter != null && !filter.isEmpty()) {
@@ -61,12 +60,10 @@ public class MainController {
                 tasks = taskRepo.findAllByDeadlineAfter(nowTime);
             } else  if (day.equals("Deadline Missing")) {
                 tasks = taskRepo.findAllByDeadlineBefore(nowTime);
-                lighting = "linear-gradient(135deg, rgba(248,80,50,1) 0%, rgba(240,96,77,1) 18%, rgba(246,41,12,1) 57%, rgba(227,45,25,1) 79%, rgba(231,56,39,1) 100%);";
             }
         }
         model.addAttribute("tasks", tasks);
         model.addAttribute("filter", filter);
-        model.addAttribute("lighting", lighting);
         return "index";
     }
 
@@ -74,8 +71,9 @@ public class MainController {
     public String addAll(@AuthenticationPrincipal User user,
                       @RequestParam String topicTask,
                       @RequestParam String textTask,
-                      @RequestParam String deadline, Model model,
-                      @RequestParam("file") MultipartFile file
+                      @RequestParam String deadline, Model model
+//            ,
+//                      @RequestParam("file") MultipartFile file
     ) throws ParseException, IOException {
 
         Date nowTime = DateUtil.setTimeToMidnight(new Date());
@@ -85,21 +83,21 @@ public class MainController {
         if (deadlineTime.after(nowTime) || deadlineTime.equals(nowTime)){
             Task task = new Task(topicTask, textTask, deadlineTime, user);
 
-            //add file
-            if(file != null && !file.getOriginalFilename().isEmpty()) {
-                File uploadDir = new File(uploadPath);
-
-                if (!uploadDir.exists()){
-                    uploadDir.mkdir();
-                }
-
-                String uuidFile = UUID.randomUUID().toString();
-                String resultFilename = uuidFile + "." + file.getOriginalFilename();
-
-                file.transferTo(new File(uploadPath + "/" + resultFilename));
-
-                task.setFilename(resultFilename);
-            }
+//            //add file
+//            if(file != null && !file.getOriginalFilename().isEmpty()) {
+//                File uploadDir = new File(uploadPath);
+//
+//                if (!uploadDir.exists()){
+//                    uploadDir.mkdir();
+//                }
+//
+//                String uuidFile = UUID.randomUUID().toString();
+//                String resultFilename = uuidFile + "." + file.getOriginalFilename();
+//
+//                file.transferTo(new File(uploadPath + "/" + resultFilename));
+//
+//                task.setFilename(resultFilename);
+//            }
 
             taskRepo.save(task);
             Iterable<Task> tasks = taskRepo.findAll();

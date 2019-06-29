@@ -9,16 +9,15 @@ import java.util.Date;
 public class Task {
     @Id
     @GeneratedValue(strategy = GenerationType.AUTO)
-    private Integer id;
+    private Long id;
 
     private String topicTask;
     private String textTask;
     private LocalDateTime problemStatementDate;
     private Date deadline;
     private LocalDateTime implementationDate;
-    private boolean completeness;
+    private boolean deleted;
     private String tag;
-    private String filename;
 
     @ManyToOne(fetch = FetchType.EAGER)
     @JoinColumn(name = "user_id")
@@ -44,13 +43,6 @@ public class Task {
         this.topicTask = topicTask;
     }
 
-    public String getFilename() {
-        return filename;
-    }
-
-    public void setFilename(String filename) {
-        this.filename = filename;
-    }
 
     public String getTag() {
         return tag;
@@ -72,11 +64,11 @@ public class Task {
         this.authorTask = authorTask;
     }
 
-    public Integer getId() {
+    public Long getId() {
         return id;
     }
 
-    public void setId(Integer id) {
+    public void setId(Long id) {
         this.id = id;
     }
 
@@ -112,11 +104,11 @@ public class Task {
         this.implementationDate = implementationDate;
     }
 
-    public boolean isCompleteness() {
-        return completeness;
+    public boolean isDeleted() {
+        return deleted;
     }
 
-    public void setCompleteness(boolean completeness) {
-        this.completeness = completeness;
+    public void setDeleted(boolean deleted) {
+        this.deleted = deleted;
     }
 }

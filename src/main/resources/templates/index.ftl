@@ -69,7 +69,7 @@
 </form>
 <div class="list-group col-md-5">
 <#list tasks as task>
-    <a href="/task/${task.id}" class="list-group-item list-group-item-action mb-2 " style="background: ${lighting}">
+    <a href="/task/${task.id}" class="list-group-item list-group-item-action mb-2 ">
         <div class="d-flex w-100 justify-content-between">
             <h5 class="mb-1">${task.topicTask} <span class="badge badge-success">${task.tag}</span></h5>
             <small>${task.deadline?date}</small>
