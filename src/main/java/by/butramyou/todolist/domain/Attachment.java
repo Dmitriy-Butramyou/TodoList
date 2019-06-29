@@ -19,6 +19,16 @@ public class Attachment {
     @JoinColumn(name = "task_id")
     private Task taskId;
 
+    public Attachment() {
+    }
+
+    public Attachment(String originalName, String generatedPath, String generatedName, Task taskId) {
+        this.originalName = originalName;
+        this.generatedPath = generatedPath;
+        this.generatedName = generatedName;
+        this.taskId = taskId;
+    }
+
     public Long getId() {
         return id;
     }

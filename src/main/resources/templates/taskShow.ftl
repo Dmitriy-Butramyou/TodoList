@@ -10,7 +10,12 @@
         <a href="/task/change/${task.id}" class="btn btn-outline-primary">Change</a>
     </div>
     <div class="card-footer text-muted">
-        Have a nice day :)
+        <#if attachment?has_content>
+            ${attachment.originalName}
+        </#if>
+
+      <div>Have a nice day :)</div>
+
     </div>
 </div>
 

@@ -1,9 +1,12 @@
 package by.butramyou.todolist.controller;
 
+import by.butramyou.todolist.domain.Attachment;
 import by.butramyou.todolist.domain.Task;
 import by.butramyou.todolist.domain.User;
+import by.butramyou.todolist.repos.AttachmentRepo;
 import by.butramyou.todolist.repos.TaskRepo;
 import by.butramyou.todolist.util.DateUtil;
+import by.butramyou.todolist.util.FileUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.security.core.annotation.AuthenticationPrincipal;
@@ -28,11 +31,14 @@ public class MainController {
     @Autowired
     private TaskRepo taskRepo;
 
+    @Autowired
+    private AttachmentRepo attachmentRepo;
+
     @Value("${upload.path}")
     private String uploadPath;
 
     @GetMapping("/")
-    public String greeting(){
+    public String greeting() {
         return "greeting";
     }
 
@@ -43,22 +49,22 @@ public class MainController {
         Iterable<Task> tasks = taskRepo.findAll();
         Date nowTime = DateUtil.setTimeToMidnight(new Date());
 
-        if(filter != null && !filter.isEmpty()) {
+        if (filter != null && !filter.isEmpty()) {
             tasks = taskRepo.findAllByTag(filter);
         } else {
             tasks = taskRepo.findAll();
         }
 
-        if(day != null && !day.isEmpty()) {
-            if(day.equals("Today")){
+        if (day != null && !day.isEmpty()) {
+            if (day.equals("Today")) {
                 tasks = taskRepo.findAllByDeadline(nowTime);
-            } else if (day.equals("Tomorrow")){
+            } else if (day.equals("Tomorrow")) {
                 nowTime = DateUtil.getTomorrow(nowTime);
                 tasks = taskRepo.findAllByDeadline(nowTime);
-            } else  if (day.equals("Someday")) {
+            } else if (day.equals("Someday")) {
                 nowTime = DateUtil.getTomorrow(nowTime);
                 tasks = taskRepo.findAllByDeadlineAfter(nowTime);
-            } else  if (day.equals("Deadline Missing")) {
+            } else if (day.equals("Deadline Missing")) {
                 tasks = taskRepo.findAllByDeadlineBefore(nowTime);
             }
         }
@@ -69,42 +75,40 @@ public class MainController {
 
     @PostMapping("/index")
     public String addAll(@AuthenticationPrincipal User user,
-                      @RequestParam String topicTask,
-                      @RequestParam String textTask,
-                      @RequestParam String deadline, Model model
-//            ,
-//                      @RequestParam("file") MultipartFile file
-    ) throws ParseException, IOException {
+                         @RequestParam String topicTask,
+                         @RequestParam String textTask,
+                         @RequestParam String deadline, Model model,
+                         @RequestParam("file") MultipartFile file) throws ParseException, IOException {
 
         Date nowTime = DateUtil.setTimeToMidnight(new Date());
         DateFormat dateFormat = new SimpleDateFormat("yyyy-MM-dd");
         Date deadlineTime = dateFormat.parse(deadline);
 
-        if (deadlineTime.after(nowTime) || deadlineTime.equals(nowTime)){
+        if (deadlineTime.after(nowTime) || deadlineTime.equals(nowTime)) {
             Task task = new Task(topicTask, textTask, deadlineTime, user);
-
-//            //add file
-//            if(file != null && !file.getOriginalFilename().isEmpty()) {
-//                File uploadDir = new File(uploadPath);
-//
-//                if (!uploadDir.exists()){
-//                    uploadDir.mkdir();
-//                }
-//
-//                String uuidFile = UUID.randomUUID().toString();
-//                String resultFilename = uuidFile + "." + file.getOriginalFilename();
-//
-//                file.transferTo(new File(uploadPath + "/" + resultFilename));
-//
-//                task.setFilename(resultFilename);
-//            }
-
             taskRepo.save(task);
+
+            //add file
+            if (file != null && !file.getOriginalFilename().isEmpty()) {
+                String generatedPath = uploadPath + FileUtils.getPath();
+                File uploadDir = new File(generatedPath);
+                if (!uploadDir.exists()) {
+                    uploadDir.mkdirs();
+                }
+                String uuidFile = UUID.randomUUID().toString();
+                String resultFilename = uuidFile + "." + file.getOriginalFilename();
+                file.transferTo(new File(generatedPath + "/" + resultFilename));
+                Attachment attachment = new Attachment(file.getOriginalFilename(), generatedPath, resultFilename, task);
+
+                attachmentRepo.save(attachment);
+            }
+
+                Iterable<Task> tasks = taskRepo.findAll();
+                model.addAttribute("tasks", tasks);
+            }
             Iterable<Task> tasks = taskRepo.findAll();
             model.addAttribute("tasks", tasks);
+            return "index";
         }
-        Iterable<Task> tasks = taskRepo.findAll();
-        model.addAttribute("tasks", tasks);
-        return "index";
-    }
+
 }
