@@ -42,7 +42,7 @@
             <div class="form-group row">
                 <label class="col-sm-3 col-form-label">Enter a task:</label>
                 <div class="col-sm-8">
-                    <textarea class="form-control"  name="textTask" placeholder="Enter a task..."id="exampleFormControlTextarea1" rows="3"></textarea>
+                    <textarea class="form-control"  name="textTask" placeholder="Enter a task..." id="exampleFormControlTextarea1" rows="3"></textarea>
                 </div>
             </div>
                 <div class="form-group row">

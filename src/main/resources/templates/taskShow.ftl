@@ -11,7 +11,15 @@
     </div>
     <div class="card-footer text-muted">
         <#if attachment?has_content>
-            ${attachment.originalName}
+             ${attachment.originalName}
+            <div>
+                <form method="post">
+                    <input type="hidden" name="_csrf" value="${_csrf.token}" />
+                    <button type="submit" class="btn btn-outline-danger">Delete file</button>
+                </form>
+            </div>
+         <#else >
+
         </#if>
 
       <div>Have a nice day :)</div>
