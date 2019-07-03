@@ -2,8 +2,9 @@
 <@c.page>
 <form method="post" enctype="multipart/form-data">
 <div class="card text-center">
+
     <div class="card-header">
-        Deadline: ${task.deadline?date}
+        <h5>Deadline: ${task.deadline?date}</h5>
         <div>
             <label class="col-sm-3 col-form-label text-danger">Edit deadline</label>
             <div class="col-sm-2 mx-auto">

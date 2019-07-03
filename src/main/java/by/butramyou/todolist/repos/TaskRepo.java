@@ -8,9 +8,13 @@ import java.util.List;
 
 public interface TaskRepo extends JpaRepository<Task, Long> {
 
-    List<Task> findAllByTag(String tag);
-    List<Task> findAllByDeadline(Date deadline);
-    List<Task> findAllByDeadlineBefore(Date deadline);
-    List<Task> findAllByDeadlineAfter(Date deadline);
+//    List<Task> findAllByTag(String tag);
+    List<Task> findAllByCompleteFalseAndDeletedFalse();
+    List<Task> findAllByDeadlineAndCompleteFalseAndDeletedFalse(Date deadline);
+    List<Task> findAllByDeadlineBeforeAndCompleteFalseAndDeletedFalse(Date deadline);
+    List<Task> findAllByDeadlineAfterAndCompleteFalseAndDeletedFalse(Date deadline);
+    List<Task> findAllByCompleteIsTrueAndDeletedFalse();
+    List<Task> findAllByDeletedTrue();
+
 }
 

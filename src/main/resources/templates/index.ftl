@@ -14,50 +14,50 @@
         <#--</form>-->
     <#--</div>-->
 <#--</div>-->
-<div>
-    <a class="btn btn-primary mb-3" data-toggle="collapse" href="#collapseExample" role="button" aria-expanded="false" aria-controls="collapseExample">
-        Add new Task
-    </a>
-</div>
-<div class="collapse" id="collapseExample">
+<#--<div>-->
+    <#--<a class="btn btn-primary mb-3" data-toggle="collapse" href="#collapseExample" role="button" aria-expanded="false" aria-controls="collapseExample">-->
+        <#--Add new Task-->
+    <#--</a>-->
+<#--</div>-->
+<#--<div class="collapse" id="collapseExample">-->
 
-    <div class="form-group mt-3  col-md-6">
+    <#--<div class="form-group mt-3  col-md-6">-->
 
-        <form method="post" enctype="multipart/form-data">
+        <#--<form method="post" enctype="multipart/form-data">-->
 
-            <div class="form-group row">
-                <label class="col-sm-3 col-form-label">Subject:</label>
-                <div class="col-sm-5">
-                    <input type="text" class="form-control" name="topicTask" placeholder="Enter subject..." />
-                </div>
-            </div>
+            <#--<div class="form-group row">-->
+                <#--<label class="col-sm-3 col-form-label">Subject:</label>-->
+                <#--<div class="col-sm-5">-->
+                    <#--<input type="text" class="form-control" name="topicTask" placeholder="Enter subject..." />-->
+                <#--</div>-->
+            <#--</div>-->
 
-            <div class="form-group row">
-                <label class="col-sm-3 col-form-label">Deadline:</label>
-                <div class="col-sm-5">
-                    <input type="date" id="deadline" name="deadline" class="form-control form-control-sm">
-                </div>
-            </div>
+            <#--<div class="form-group row">-->
+                <#--<label class="col-sm-3 col-form-label">Deadline:</label>-->
+                <#--<div class="col-sm-5">-->
+                    <#--<input type="date" id="deadline" name="deadline" class="form-control form-control-sm">-->
+                <#--</div>-->
+            <#--</div>-->
 
-            <div class="form-group row">
-                <label class="col-sm-3 col-form-label">Enter a task:</label>
-                <div class="col-sm-8">
-                    <textarea class="form-control"  name="textTask" placeholder="Enter a task..." id="exampleFormControlTextarea1" rows="3"></textarea>
-                </div>
-            </div>
-                <div class="form-group row">
-                    <label class="col-sm-3 col-form-label">Upload file:</label>
-                    <div class="col-sm-8">
-                        <input type="file"  name="file" class="form-control-file" id="exampleFormControlFile1">                    </div>
-                </div>
-            <input type="hidden" name="_csrf" value="${_csrf.token}" />
-            <div class="form-group">
-                <button type="submit" class="btn btn-primary mb-2">Send</button>
-            </div>
-        </form>
-    </div>
-</div>
-
+            <#--<div class="form-group row">-->
+                <#--<label class="col-sm-3 col-form-label">Enter a task:</label>-->
+                <#--<div class="col-sm-8">-->
+                    <#--<textarea class="form-control"  name="textTask" placeholder="Enter a task..." id="exampleFormControlTextarea1" rows="3"></textarea>-->
+                <#--</div>-->
+            <#--</div>-->
+                <#--<div class="form-group row">-->
+                    <#--<label class="col-sm-3 col-form-label">Upload file:</label>-->
+                    <#--<div class="col-sm-8">-->
+                        <#--<input type="file"  name="file" class="form-control-file" id="exampleFormControlFile1">                    </div>-->
+                <#--</div>-->
+            <#--<input type="hidden" name="_csrf" value="${_csrf.token}" />-->
+            <#--<div class="form-group">-->
+                <#--<button type="submit" class="btn btn-primary mb-2">Send</button>-->
+            <#--</div>-->
+        <#--</form>-->
+    <#--</div>-->
+<#--</div>-->
+<div class="list-group col-md-5 mx-auto">
 <form method="get" action="/index">
     <div class="btn-group mb-3" role="group" aria-label="Basic example">
         <button type="submit" class="btn btn-outline-primary" name="day" value="All">All</button>
@@ -67,16 +67,35 @@
         <button type="submit" class="btn btn-outline-danger" name="day" value="Deadline Missing">Deadline Missing</button>
     </div>
 </form>
-<div class="list-group col-md-5">
+</div>
+
+<div class="list-group col-md-5 mx-auto">
 <#list tasks as task>
     <a href="/task/${task.id}" class="list-group-item list-group-item-action mb-2 ">
         <div class="d-flex w-100 justify-content-between">
             <h5 class="mb-1">${task.topicTask} <span class="badge badge-success">${task.tag}</span></h5>
             <small>${task.deadline?date}</small>
         </div>
-        <p class="mb-1">${task.textTask}</p>
-        <small>${task.authorName}</small>
+        <p class="mb-1">${task.textTask} </p>
+        <small>${task.authorName} </small>
     </a>
+
+    <div class="d-flex bd-highlight mb-3">
+        <#if task.complete>
+    <a href="/index/uncomplete/${task.id}">
+        <button type="button" class="btn btn-outline-primary mb-3">Not performed</button>
+    </a>
+        <#else >
+    <a href="/index/complete/${task.id}">
+        <button type="button" class="btn btn-outline-success mb-3">Performed</button>
+    </a>
+        </#if>
+        <a href="/index/delete/${task.id}" class="ml-auto">
+            <button type="button" class="btn btn-outline-danger mb-3">Delete</button>
+        </a>
+
+    </div>
+
 <#else >
         No task
 </#list>

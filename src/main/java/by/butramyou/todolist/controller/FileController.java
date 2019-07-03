@@ -16,12 +16,14 @@ import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.multipart.MultipartFile;
 
+import java.awt.*;
 import java.io.File;
 import java.io.IOException;
 import java.text.DateFormat;
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.util.Date;
+import java.util.Map;
 import java.util.UUID;
 
 @Controller
@@ -49,6 +51,7 @@ public class FileController {
     @PostMapping("/change/{task}")
     public String updateTask(@AuthenticationPrincipal User user,
                              @PathVariable Task task,
+                             @RequestParam Map<String,String> tag,
                              @RequestParam String topicTask,
                              @RequestParam(required = false, defaultValue = "") String textTask,
                              @RequestParam(required = false, defaultValue = "") String deadline,
@@ -58,6 +61,7 @@ public class FileController {
 
         Date nowTime = DateUtil.setTimeToMidnight(new Date());
         DateFormat dateFormat = new SimpleDateFormat("yyyy-MM-dd");
+
 
         if(!deadline.isEmpty()) {
             Date deadlineTime = dateFormat.parse(deadline);
@@ -72,7 +76,7 @@ public class FileController {
             task.setTextTask(textTask);
         }
 
-            taskRepo.save(task);
+        taskRepo.save(task);
 
             //add file
             if (file != null && !file.getOriginalFilename().isEmpty()) {

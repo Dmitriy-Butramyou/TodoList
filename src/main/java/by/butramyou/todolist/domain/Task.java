@@ -18,6 +18,7 @@ public class Task {
     private LocalDateTime implementationDate;
     private boolean deleted;
     private String tag;
+    private boolean complete;
 
     @ManyToOne(fetch = FetchType.EAGER)
     @JoinColumn(name = "user_id")
@@ -110,5 +111,13 @@ public class Task {
 
     public void setDeleted(boolean deleted) {
         this.deleted = deleted;
+    }
+
+    public boolean isComplete() {
+        return complete;
+    }
+
+    public void setComplete(boolean complete) {
+        this.complete = complete;
     }
 }

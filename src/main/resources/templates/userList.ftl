@@ -1,8 +1,9 @@
 <#import "parts/common.ftl" as c>
 
 <@c.page>
+<div class="col-sm-7 mx-auto">
 <h4>List of users</h4>
-<table class="table col-md-6 mt-3">
+<table class="table mt-3">
     <thead class="thead-dark">
     <tr>
         <th scope="col">Name</th>
@@ -21,4 +22,5 @@
     </tbody>
     </thead>
 </table>
+</div>
 </@c.page>
