@@ -1,10 +1,10 @@
 <#import "parts/common.ftl" as c>
-
 <@c.page>
+<div class="col-sm-7 mx-auto">
 <h4>User editor</h4>
 <form action="/user" method="post">
 
-    <table class="table col-md-6 mt-3">
+    <table class="table mt-3">
         <thead class="thead-dark">
         <tr>
             <th scope="col">Name</th>
@@ -29,8 +29,7 @@
             <input type="hidden" value="${_csrf.token}" name="_csrf">
             <button type="submit" class="btn btn-success">Save</button>
         </tbody>
-        </thead>
-
 
 </form>
+</div>
 </@c.page>

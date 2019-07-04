@@ -9,7 +9,7 @@ know = Session.SPRING_SECURITY_CONTEXT??
     >
 <#else>
     <#assign
-    name = "unknown"
+    name = "Please, login"
     isAdmin = false
     >
 </#if>

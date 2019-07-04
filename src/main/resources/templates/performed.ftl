@@ -1,12 +1,6 @@
 <#import "parts/common.ftl" as c>
-<#import "parts/login.ftl" as l>
 <@c.page>
-<div class="list-group col-md-5 mx-auto">
-<a href="/basket/deleteAll">
-    <button type="button" class="btn btn-danger btn-lg btn-block">Delete everything</button>
-</a>
 
-</div>
 <div class="list-group col-md-5 mx-auto">
 <#list tasks as task>
     <a href="/task/${task.id}" class="list-group-item list-group-item-action mb-2 ">
@@ -19,12 +13,12 @@
     </a>
 
     <div class="d-flex bd-highlight mb-3">
-            <a href="/basket/restore/${task.id}">
-            <button type="button" class="ml-auto btn btn-outline-success mb-3">Restore</button>
-            </a>
 
-        <a href="/basket/delete/${task.id}" class="ml-auto">
-            <button type="button" class="ml-auto btn btn-outline-danger mb-3">Delete</button>
+        <a href="/task/performed/uncomplete/${task.id}">
+            <button type="button" class="btn btn-outline-primary mb-3">Not performed</button>
+        </a>
+        <a href="/index/delete/${task.id}" class="ml-auto">
+            <button type="button" class="btn btn-outline-danger mb-3">Delete</button>
         </a>
 
     </div>

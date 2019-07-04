@@ -31,7 +31,6 @@ public class UserService implements UserDetailsService {
             return false;
         }
 
-        user.setActive(true);
         user.setRoles(Collections.singleton(Role.USER));
         userRepo.save(user);
         return true;
@@ -41,7 +40,7 @@ public class UserService implements UserDetailsService {
         return userRepo.findAll();
     }
 
-    public void saveUser(User user, String username, Map<String,String> form) {
+    public void saveUser(User user, String username, Map<String, String> form) {
         user.setUsername(username);
 
         Set<String> roles = Arrays.stream(Role.values())
@@ -50,8 +49,8 @@ public class UserService implements UserDetailsService {
 
         user.getRoles().clear();
 
-        for(String key : form.keySet()) {
-            if(roles.contains(key)){
+        for (String key : form.keySet()) {
+            if (roles.contains(key)) {
                 user.getRoles().add(Role.valueOf(key));
             }
         }
@@ -60,11 +59,11 @@ public class UserService implements UserDetailsService {
 
     public void updateProfile(User user, String username, String password) {
 
-        if(!StringUtils.isEmpty(username)) {
+        if (!StringUtils.isEmpty(username)) {
             user.setUsername(username);
         }
 
-        if(!StringUtils.isEmpty(password)) {
+        if (!StringUtils.isEmpty(password)) {
             user.setPassword(password);
         }
         userRepo.save(user);

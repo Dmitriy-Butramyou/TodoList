@@ -13,7 +13,6 @@ public class Attachment {
     private String originalName;
     private String generatedPath;
     private String generatedName;
-    private String mimeType;
 
     @OneToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "task_id")
@@ -59,14 +58,6 @@ public class Attachment {
 
     public void setGeneratedName(String generatedName) {
         this.generatedName = generatedName;
-    }
-
-    public String getMimeType() {
-        return mimeType;
-    }
-
-    public void setMimeType(String mimeType) {
-        this.mimeType = mimeType;
     }
 
     public Task getTaskId() {

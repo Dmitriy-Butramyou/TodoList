@@ -17,7 +17,6 @@
         <div class="col-sm-3 mx-auto mb-2">
             <input type="text" name="topicTask" class="form-control" value="${task.topicTask}">
         </div>
-    <#--<p> <input type="text" name="textTask"  class="form-control" value="${task.textTask}" id="exampleFormControlTextarea1"> </p>-->
         <div class="col-sm-6 mx-auto">
             <textarea class="form-control" name="textTask" placeholder="${task.textTask}"
                       id="exampleFormControlTextarea1" rows="3"></textarea>
@@ -42,7 +41,6 @@
             <a class="btn btn-outline-success" data-toggle="collapse" href="#collapseExample" role="button" aria-expanded="false" aria-controls="collapseExample">
                 Add file
             </a>
-
 
                 <div class="collapse" id="collapseExample">
                     <div class="form-group row">

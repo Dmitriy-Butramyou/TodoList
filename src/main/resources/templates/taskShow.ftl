@@ -2,7 +2,6 @@
 <@c.page>
 <div class="card text-center">
 
-
     <div class="card-header">
         <#if task.complete>
             <a href="/index/uncomplete/${task.id}">
@@ -14,7 +13,6 @@
             </a>
         </#if>
 
-
         <h5>Deadline: ${task.deadline?date}</h5>
     </div>
     <div class="card-body">
@@ -25,12 +23,9 @@
     <div class="card-footer text-muted">
         <#if attachment?has_content>
             ${attachment.originalName}
-            <div>
-                <form method="post">
-                    <button type="submit" class="btn btn-outline-danger">Delete file</button>
-                    <input type="hidden" name="_csrf" value="${_csrf.token}"/>
-                </form>
-            </div>
+            <a href="/task/delete-file/${task.id}">
+            <button type="submit" class="btn btn-outline-danger">Delete file</button>
+            </a>
         <#else >
             <div>Have a nice day :)</div>
         </#if>

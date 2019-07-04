@@ -1,7 +1,6 @@
 package by.butramyou.todolist.domain;
 
 import javax.persistence.*;
-import java.text.ParseException;
 import java.time.LocalDateTime;
 import java.util.Date;
 
@@ -17,7 +16,7 @@ public class Task {
     private Date deadline;
     private LocalDateTime implementationDate;
     private boolean deleted;
-    private String tag;
+    private boolean tag;
     private boolean complete;
 
     @ManyToOne(fetch = FetchType.EAGER)
@@ -27,13 +26,13 @@ public class Task {
     public Task() {
     }
 
-    public Task(String topicTask, String textTask, Date deadline, User user) throws ParseException {
+    public Task(String topicTask, String textTask, Date deadline, User user) {
         this.topicTask = topicTask;
         this.authorTask = user;
         this.textTask = textTask;
         this.problemStatementDate = LocalDateTime.now();
         this.deadline = deadline;
-        this.tag = "New";
+        this.tag = true;
     }
 
     public String getTopicTask() {
@@ -45,11 +44,11 @@ public class Task {
     }
 
 
-    public String getTag() {
+    public boolean getTag() {
         return tag;
     }
 
-    public void setTag(String tag) {
+    public void setTag(boolean tag) {
         this.tag = tag;
     }
 

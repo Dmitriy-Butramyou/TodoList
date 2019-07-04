@@ -6,5 +6,4 @@ import org.springframework.data.jpa.repository.JpaRepository;
 
 public interface AttachmentRepo extends JpaRepository<Attachment, Long> {
     Attachment findAllByTaskId(Task taskId);
-    Attachment findByOriginalName(String name);
 }

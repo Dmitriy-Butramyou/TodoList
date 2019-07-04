@@ -36,10 +36,10 @@
                  </li>
              </#if>
               <#if user??>
-         <form method="get" action="/index">
+         <a href="/task/performed">
              <button class="btn btn-outline-success my-2 my-sm-0 ml-3" name="day" value="Performed" type="submit">
                  Performed
-             </button>
+         </a>
          </form>
               </#if>
 
