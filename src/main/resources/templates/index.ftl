@@ -1,6 +1,7 @@
 <#import "parts/common.ftl" as c>
 <@c.page>
 <div class="list-group col-md-5 mx-auto">
+    <h4>${location}</h4>
 <form method="get" action="/index">
     <div class="btn-group mb-3" role="group" aria-label="Basic example">
         <button type="submit" class="btn btn-outline-primary" name="day" value="All">All</button>
@@ -14,7 +15,11 @@
 
 <div class="list-group col-md-5 mx-auto">
 <#list tasks as task>
-    <a href="/task/${task.id}" class="list-group-item list-group-item-action mb-2 ">
+    <a href="/task/${task.id}" class="list-group-item list-group-item-action mb-2 " style="background: ${lighting}">
+
+
+
+
         <div class="d-flex w-100 justify-content-between">
             <h5 class="mb-1">${task.topicTask}
                 <span class="badge badge-success"><#if task.tag>New<#else></#if></span></h5>

@@ -4,7 +4,7 @@
 
     <div class="card-header">
         <#if task.complete>
-            <a href="/index/uncomplete/${task.id}">
+            <a href="/task/performed/uncomplete/${task.id}">
                <button type="button" class="btn btn-outline-danger">Click on me if the task is not completed. ((</button>
             </a>
         <#else >
@@ -22,7 +22,7 @@
     </div>
     <div class="card-footer text-muted">
         <#if attachment?has_content>
-            ${attachment.originalName}
+            <a href="/task/file-download/${task.id}/${attachment.originalName}">${attachment.originalName}</a>
             <a href="/task/delete-file/${task.id}">
             <button type="submit" class="btn btn-outline-danger">Delete file</button>
             </a>

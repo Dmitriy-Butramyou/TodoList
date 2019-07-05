@@ -37,11 +37,13 @@ public class TaskService {
     public void setComplete(Task task) {
         task.setImplementationDate(LocalDateTime.now());
         task.setComplete(true);
+        task.setTag(false);
         taskRepo.save(task);
     }
 
     public void setUnComplete(Task task) {
         task.setComplete(false);
+        task.setTag(true);
         taskRepo.save(task);
     }
 
@@ -57,11 +59,13 @@ public class TaskService {
 
     public void deleteTask(Task task) {
         task.setDeleted(true);
+        task.setTag(false);
         taskRepo.save(task);
     }
 
     public void restoreTask(Task task) {
         task.setDeleted(false);
+        task.setTag(true);
         task.setDeadline(DateUtil.setTimeToMidnight(new Date()));
         taskRepo.save(task);
     }

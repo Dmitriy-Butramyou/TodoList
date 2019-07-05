@@ -32,25 +32,34 @@ public class MainController {
                         Model model) {
         Iterable<Task> tasks = taskRepo.findAllByCompleteFalseAndDeletedFalse();
         Date nowTime = DateUtil.setTimeToMidnight(new Date());
+        String location = "All task";
+        String lighting = "";
 
         if (day != null && !day.isEmpty()) {
             switch (day) {
                 case "Today":
                     tasks = taskRepo.findAllByDeadlineAndCompleteFalseAndDeletedFalse(nowTime);
+                    location = "Tasks for today";
                     break;
                 case "Tomorrow":
                     nowTime = DateUtil.getTomorrow(nowTime);
                     tasks = taskRepo.findAllByDeadlineAndCompleteFalseAndDeletedFalse(nowTime);
+                    location = "Tasks for tomorrow";
                     break;
                 case "Someday":
                     nowTime = DateUtil.getTomorrow(nowTime);
                     tasks = taskRepo.findAllByDeadlineAfterAndCompleteFalseAndDeletedFalse(nowTime);
+                    location = "Tasks for the remaining days";
                     break;
                 case "Deadline Missing":
                     tasks = taskRepo.findAllByDeadlineBeforeAndCompleteFalseAndDeletedFalse(nowTime);
+                    location = "Tasks with a missed deadline";
+                    lighting = "linear-gradient(135deg, rgba(248,80,50,1) 0%, rgba(240,96,77,1) 18%, rgba(246,41,12,1) 57%, rgba(227,45,25,1) 79%, rgba(231,56,39,1) 100%);";
                     break;
             }
         }
+        model.addAttribute("lighting", lighting);
+        model.addAttribute("location", location);
         model.addAttribute("tasks", tasks);
         return "index";
     }
