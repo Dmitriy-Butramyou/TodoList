@@ -1,26 +1,26 @@
 <#import "parts/common.ftl" as c>
 <@c.page>
 
-<div>
+<div class="col-md-8 mx-auto">
     <form method="post" enctype="multipart/form-data">
 
         <div class="form-group row">
             <label class="col-sm-3 col-form-label">Subject:</label>
-            <div class="col-sm-5">
+            <div class="col-sm-7">
                 <input type="text" class="form-control" name="topicTask" placeholder="Enter subject..." />
             </div>
         </div>
 
         <div class="form-group row">
             <label class="col-sm-3 col-form-label">Deadline:</label>
-            <div class="col-sm-5">
+            <div class="col-sm-7">
                 <input type="date" id="deadline" name="deadline" class="form-control form-control-sm">
             </div>
         </div>
 
         <div class="form-group row">
             <label class="col-sm-3 col-form-label">Enter a task:</label>
-            <div class="col-sm-5">
+            <div class="col-sm-7">
                 <textarea class="form-control"  name="textTask" placeholder="Enter a task..." id="exampleFormControlTextarea1" rows="3"></textarea>
             </div>
         </div>

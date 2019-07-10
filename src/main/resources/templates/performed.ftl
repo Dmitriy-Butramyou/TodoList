@@ -24,7 +24,7 @@
     </div>
 
 <#else >
-        No task
+        <h4 class="mt-3 mx-auto">No performed tasks</h4>
 </#list>
 </div>
 

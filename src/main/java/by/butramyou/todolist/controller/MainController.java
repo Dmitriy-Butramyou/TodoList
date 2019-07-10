@@ -11,7 +11,12 @@ import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestParam;
 
+import java.text.DateFormat;
+import java.text.ParseException;
+import java.text.SimpleDateFormat;
 import java.util.Date;
+import java.util.regex.Matcher;
+import java.util.regex.Pattern;
 
 @Controller
 public class MainController {
@@ -29,7 +34,8 @@ public class MainController {
 
     @GetMapping("/index")
     public String index(@RequestParam(required = false, defaultValue = "") String day,
-                        Model model) {
+                        @RequestParam(required = false, defaultValue = "") String deadline,
+                        Model model) throws ParseException {
         Iterable<Task> tasks = taskRepo.findAllByCompleteFalseAndDeletedFalse();
         Date nowTime = DateUtil.setTimeToMidnight(new Date());
         String location = "All task";
@@ -46,11 +52,6 @@ public class MainController {
                     tasks = taskRepo.findAllByDeadlineAndCompleteFalseAndDeletedFalse(nowTime);
                     location = "Tasks for tomorrow";
                     break;
-                case "Someday":
-                    nowTime = DateUtil.getTomorrow(nowTime);
-                    tasks = taskRepo.findAllByDeadlineAfterAndCompleteFalseAndDeletedFalse(nowTime);
-                    location = "Tasks for the remaining days";
-                    break;
                 case "Deadline Missing":
                     tasks = taskRepo.findAllByDeadlineBeforeAndCompleteFalseAndDeletedFalse(nowTime);
                     location = "Tasks with a missed deadline";
@@ -58,6 +59,13 @@ public class MainController {
                     break;
             }
         }
+        if(!deadline.isEmpty()) {
+            DateFormat dateFormat = new SimpleDateFormat("yyyy-MM-dd");
+            Date deadlineTime = dateFormat.parse(deadline);
+            tasks = taskRepo.findAllByDeadline(deadlineTime);
+            location = "Tasks for " + deadline;
+        }
+
         model.addAttribute("lighting", lighting);
         model.addAttribute("location", location);
         model.addAttribute("tasks", tasks);

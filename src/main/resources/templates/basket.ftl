@@ -3,7 +3,7 @@
 <@c.page>
 <div class="list-group col-md-5 mx-auto">
 <a href="/basket/deleteAll">
-    <button type="button" class="btn btn-danger btn-lg btn-block">Delete everything</button>
+    <button type="button" class="btn btn-outline-danger btn-lg btn-block mb-2">Delete everything</button>
 </a>
 
 </div>
@@ -30,7 +30,7 @@
     </div>
 
 <#else >
-        No task
+       <h4 class="mt-3 mx-auto">No remote tasks</h4>
 </#list>
 </div>
 

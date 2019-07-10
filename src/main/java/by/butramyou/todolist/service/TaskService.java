@@ -127,10 +127,15 @@ public class TaskService {
                 task.setDeadline(deadlineTime);
             }
         }
-        task.setTopicTask(topicTask);
+
+        if(!topicTask.isEmpty()) {
+            task.setTopicTask(topicTask);
+        }
+
         if (!textTask.isEmpty()) {
             task.setTextTask(textTask);
         }
+
         taskRepo.save(task);
 
         if (file != null && !file.getOriginalFilename().isEmpty()) {

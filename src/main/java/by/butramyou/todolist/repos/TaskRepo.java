@@ -16,6 +16,8 @@ public interface TaskRepo extends JpaRepository<Task, Long> {
 
     List<Task> findAllByDeadlineAfterAndCompleteFalseAndDeletedFalse(Date deadline);
 
+    List<Task> findAllByDeadline(Date deadline);
+
     List<Task> findAllByCompleteIsTrueAndDeletedFalse();
 
     List<Task> findAllByDeletedTrue();

@@ -1,5 +1,4 @@
 <#macro login path isRegisterForm>
-
 <form action="${path}" method="post">
     <div class="form-group row">
         <label class="col-sm-2 col-form-label"> User Name: </label>
@@ -22,7 +21,7 @@
 <#macro logout>
     <#include "security.ftl">
     <form action="/logout" method="post">
-        <button class="btn btn-outline-dark" type="submit"><#if user??>Sign Out<#else>Sign In</#if></button>
+        <button class="btn btn-outline-light" type="submit"><#if user??>Sign Out<#else>Sign In</#if></button>
         <input type="hidden" name="_csrf" value="${_csrf.token}"/>
     </form>
 </#macro>

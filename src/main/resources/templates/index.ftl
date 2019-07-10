@@ -7,10 +7,26 @@
         <button type="submit" class="btn btn-outline-primary" name="day" value="All">All</button>
         <button type="submit" class="btn btn-outline-primary" name="day" value="Today">Today</button>
         <button type="submit" class="btn btn-outline-primary" name="day" value="Tomorrow">Tomorrow</button>
-        <button type="submit" class="btn btn-outline-primary" name="day" value="Someday">Someday</button>
+        <a class="btn btn-outline-primary" data-toggle="collapse" href="#collapseExample" role="button" aria-expanded="false" aria-controls="collapseExample">
+            Someday
+        </a>
         <button type="submit" class="btn btn-outline-danger" name="day" value="Deadline Missing">Deadline Missing</button>
     </div>
 </form>
+</div>
+
+<div class="collapse" id="collapseExample">
+    <div class="form-group mt-3 col-md-5 mx-auto">
+        <form method="get" class="form-inline">
+            <div class="form-group mb-2">
+                <input type="date" id="deadline" name="deadline" class="form-control form-control-sm"
+                       placeholder="YYYY-MM-DD">
+            </div>
+            <div class="form-group">
+                <button type="submit" class="btn btn-primary ml-3 mb-2">Find</button>
+            </div>
+        </form>
+    </div>
 </div>
 
 <div class="list-group col-md-5 mx-auto">
@@ -31,9 +47,16 @@
 
     <div class="d-flex bd-highlight mb-3">
 
-        <a href="/index/complete/${task.id}">
-        <button type="button" class="btn btn-outline-success mb-3">Performed</button>
-    </a>
+        <#if task.complete>
+        <a href="/task/performed/uncomplete/${task.id}">
+            <button type="button" class="btn btn-outline-primary mb-3">Not performed</button>
+        </a>
+        <#else >
+            <a href="/index/complete/${task.id}">
+            <button type="button" class="btn btn-outline-success mb-3">Performed</button>
+        </a>
+        </#if>
+
         <a href="/index/delete/${task.id}" class="ml-auto">
             <button type="button" class="btn btn-outline-danger mb-3">Delete</button>
         </a>
