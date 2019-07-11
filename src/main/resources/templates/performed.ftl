@@ -1,6 +1,5 @@
 <#import "parts/common.ftl" as c>
 <@c.page>
-
 <div class="list-group col-md-5 mx-auto">
 <#list tasks as task>
     <a href="/task/${task.id}" class="list-group-item list-group-item-action mb-2 ">
@@ -27,5 +26,4 @@
         <h4 class="mt-3 mx-auto">No performed tasks</h4>
 </#list>
 </div>
-
 </@c.page>

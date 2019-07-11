@@ -70,8 +70,8 @@ public class TaskService {
         taskRepo.save(task);
     }
 
-    public void deleteAll() {
-        Iterable<Task> tasks = taskRepo.findAllByDeletedTrue();
+    public void deleteAll(User user) {
+        Iterable<Task> tasks = taskRepo.findAllByDeletedTrueAndAuthorTask(user);
         for (Task task : tasks) {
             Attachment attachment = attachmentRepo.findAllByTaskId(task);
             if (attachment != null) {

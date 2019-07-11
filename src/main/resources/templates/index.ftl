@@ -1,5 +1,6 @@
 <#import "parts/common.ftl" as c>
 <@c.page>
+
 <div class="list-group col-md-5 mx-auto">
     <h4>${location}</h4>
 <form method="get" action="/index">
@@ -32,9 +33,6 @@
 <div class="list-group col-md-5 mx-auto">
 <#list tasks as task>
     <a href="/task/${task.id}" class="list-group-item list-group-item-action mb-2 " style="background: ${lighting}">
-
-
-
 
         <div class="d-flex w-100 justify-content-between">
             <h5 class="mb-1">${task.topicTask}

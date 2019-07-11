@@ -60,7 +60,7 @@ public class TaskController {
         if (FileUtils.removeFile(attachment.getGeneratedPath(), attachment.getGeneratedName())) {
             attachmentRepo.delete(attachment);
         }
-        return "redirect:/task/" + task.getId();
+        return "redirect:/task";
     }
 
     @GetMapping("/add")
@@ -91,8 +91,7 @@ public class TaskController {
     }
 
     @PostMapping("/change/{task}")
-    public String updateOneTask(@AuthenticationPrincipal User user,
-                             @PathVariable Task task,
+    public String updateOneTask(@PathVariable Task task,
                              @RequestParam String topicTask,
                              @RequestParam(required = false, defaultValue = "") String textTask,
                              @RequestParam(required = false, defaultValue = "") String deadline,
@@ -110,8 +109,8 @@ public class TaskController {
     }
 
     @GetMapping("/performed")
-    public String getPerformed(Model model) {
-        Iterable<Task> tasks = taskRepo.findAllByCompleteIsTrueAndDeletedFalse();
+    public String getPerformed(@AuthenticationPrincipal User currentUser, Model model) {
+        Iterable<Task> tasks = taskRepo.findAllByCompleteIsTrueAndDeletedFalseAndAuthorTask(currentUser);
         model.addAttribute("tasks", tasks);
         return "performed";
     }

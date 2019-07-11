@@ -2,9 +2,11 @@ package by.butramyou.todolist.controller;
 
 
 import by.butramyou.todolist.domain.Task;
+import by.butramyou.todolist.domain.User;
 import by.butramyou.todolist.repos.TaskRepo;
 import by.butramyou.todolist.service.TaskService;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.security.core.annotation.AuthenticationPrincipal;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -20,8 +22,8 @@ public class BasketController {
     private TaskService taskService;
 
     @GetMapping("/basket")
-    public String basket(Model model) {
-        Iterable<Task> tasks = taskRepo.findAllByDeletedTrue();
+    public String basket(@AuthenticationPrincipal User currentUser, Model model) {
+        Iterable<Task> tasks = taskRepo.findAllByDeletedTrueAndAuthorTask(currentUser);
         model.addAttribute("tasks", tasks);
         return "basket";
     }
@@ -45,8 +47,8 @@ public class BasketController {
     }
 
     @GetMapping("/basket/deleteAll")
-    public String deleteAll() {
-        taskService.deleteAll();
+    public String deleteAll(@AuthenticationPrincipal User user) {
+        taskService.deleteAll(user);
         return "redirect:/basket";
     }
 

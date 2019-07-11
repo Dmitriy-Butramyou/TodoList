@@ -33,5 +33,4 @@
        <h4 class="mt-3 mx-auto">No remote tasks</h4>
 </#list>
 </div>
-
 </@c.page>
