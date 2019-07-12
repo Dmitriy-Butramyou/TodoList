@@ -88,19 +88,24 @@ public class TaskService {
         taskRepo.save(task);
     }
 
-    public void addTask(String deadline, String topicTask, String textTask, User user, MultipartFile file) throws ParseException, IOException {
+    public boolean addTask(String deadline, String topicTask, String textTask, User user, MultipartFile file) throws ParseException, IOException {
         Date nowTime = DateUtil.setTimeToMidnight(new Date());
         DateFormat dateFormat = new SimpleDateFormat("yyyy-MM-dd");
-        Date deadlineTime = dateFormat.parse(deadline);
+        Date deadlineTime = dateFormat.parse("2000-01-01");
+        if(!deadline.isEmpty()){
+             deadlineTime = dateFormat.parse(deadline);
+        }
 
-        if (deadlineTime.after(nowTime) || deadlineTime.equals(nowTime)) {
+        if (!topicTask.isEmpty() & !textTask.isEmpty() & deadlineTime.after(nowTime) || deadlineTime.equals(nowTime)) {
             Task task = new Task(topicTask, textTask, deadlineTime, user);
             taskRepo.save(task);
 
             if (file != null && !file.getOriginalFilename().isEmpty()) {
                 addFile(file, task);
             }
+            return true;
         }
+        return false;
     }
 
     private void addFile(MultipartFile file, Task task) throws IOException {

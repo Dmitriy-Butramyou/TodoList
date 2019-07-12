@@ -1,6 +1,9 @@
 package by.butramyou.todolist.domain;
 
+import org.hibernate.validator.constraints.Length;
+
 import javax.persistence.*;
+import javax.validation.constraints.NotBlank;
 import java.time.LocalDateTime;
 import java.util.Date;
 
@@ -11,9 +14,13 @@ public class Task {
     private Long id;
 
     private String topicTask;
+
     private String textTask;
+
     private LocalDateTime problemStatementDate;
+
     private Date deadline;
+
     private LocalDateTime implementationDate;
     private boolean deleted;
     private boolean tag;

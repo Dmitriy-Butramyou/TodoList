@@ -60,7 +60,7 @@ public class TaskController {
         if (FileUtils.removeFile(attachment.getGeneratedPath(), attachment.getGeneratedName())) {
             attachmentRepo.delete(attachment);
         }
-        return "redirect:/task";
+        return "redirect:/task/{task}";
     }
 
     @GetMapping("/add")
@@ -72,14 +72,15 @@ public class TaskController {
     public String addTask(@AuthenticationPrincipal User user,
                           @RequestParam String topicTask,
                           @RequestParam String textTask,
-                          @RequestParam String deadline, Model model,
+                          @RequestParam String deadline,
+                          Model model,
                           @RequestParam("file") MultipartFile file) throws ParseException, IOException {
 
-        taskService.addTask(deadline, topicTask, textTask, user, file);
-
-        Iterable<Task> tasks = taskRepo.findAll();
-        model.addAttribute("tasks", tasks);
-        return "redirect:/index";
+        if (taskService.addTask(deadline, topicTask, textTask, user, file)) {
+            return "redirect:/index";
+        }
+        model.addAttribute("error", "Check the correctness of the entered data");
+        return "addTask";
     }
 
     @GetMapping("/change/{task}")
@@ -92,11 +93,11 @@ public class TaskController {
 
     @PostMapping("/change/{task}")
     public String updateOneTask(@PathVariable Task task,
-                             @RequestParam String topicTask,
-                             @RequestParam(required = false, defaultValue = "") String textTask,
-                             @RequestParam(required = false, defaultValue = "") String deadline,
-                             Model model,
-                             @RequestParam("file") MultipartFile file) throws ParseException, IOException {
+                                @RequestParam String topicTask,
+                                @RequestParam(required = false, defaultValue = "") String textTask,
+                                @RequestParam(required = false, defaultValue = "") String deadline,
+                                Model model,
+                                @RequestParam("file") MultipartFile file) throws ParseException, IOException {
 
         taskService.updateTask(task, topicTask, textTask, deadline, file);
         return "redirect:/task/{task}";
