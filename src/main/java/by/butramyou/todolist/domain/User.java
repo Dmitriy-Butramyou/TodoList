@@ -88,7 +88,6 @@ public class User implements UserDetails {
     }
 
     public boolean isAdmin() {
-//        return true;
         return roles.contains(Role.ADMIN);
     }
 
